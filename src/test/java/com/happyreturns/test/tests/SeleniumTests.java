@@ -3,6 +3,7 @@ package com.happyreturns.test.tests;
 import com.happyreturns.test.BaseSeleniumClass;
 import com.happyreturns.test.DriverBase;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -37,5 +38,6 @@ public class SeleniumTests extends DriverBase {
     public void navigateToGoogleTest() throws Exception {
         BaseSeleniumClass baseSeleniumClass = new BaseSeleniumClass();
         Assert.assertTrue(baseSeleniumClass.navigateToGoogle());
+
     }
 }

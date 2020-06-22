@@ -30,9 +30,12 @@ public class BaseSeleniumClass extends DriverBase {
     public Boolean navigateToGoogle() throws Exception {
         WebDriver driver = getDriver();
         driver.get("https://google.com");
+        // send keys "Happy Returns"
+        // click search icon
+        driver.findElement(By.xpath("//*[text()='Happy Returns']"));
+        // validate https://happyreturns.com
         return true;
     }
-
 
 
 }

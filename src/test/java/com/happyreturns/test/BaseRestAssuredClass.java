@@ -1,10 +1,18 @@
 package com.happyreturns.test;
 
+import io.restassured.http.Method;
+import io.restassured.response.Response;
 import org.json.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.json.Json;
 import com.google.gson.*;
 import org.json.simple.*;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.RestAssured;
+
+
+import java.awt.*;
+import java.io.*;
 
 import static io.restassured.RestAssured.*;
 
@@ -27,20 +35,70 @@ public class BaseRestAssuredClass {
      *
      */
 
-
     public String getVariants() {
+        RequestSpecification httpRequest = RestAssured.given();
+        Response response = httpRequest.request(Method.GET, "getProductVariants");
+        //        Response response = request.queryParam("id","39072856").get("order");
+        SerializeToFile(response, "responseSerialized");
         return null;
     }
 
+    public static void SerializeToFile(Object classObject, String fileName)
+    {
+        try {
+            FileOutputStream fileStream = new FileOutputStream(fileName);
+            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+            objectStream.writeObject(classObject);
+
+            objectStream.close();
+            fileStream.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     public String postVariants() {
+        getVariants();
+        Response deSerializedResponse = (Response) DeSerializeFromFileToObject("responseSerialized");
         return with()
                 .baseUri(baseuri)
                 .header("Content-Type", "application/json")
                 .when()
-                .body("< !! PUT YOUR REQUEST BODY HERE !! >")
+                .body(deSerializedResponse)
                 .request("POST", "order")
                 .then()
                 .extract()
                 .body().jsonPath().prettyPrint();
     }
+
+    public static Object DeSerializeFromFileToObject(String fileName)
+    {
+        try {
+            FileInputStream fileStream = new FileInputStream(new File(fileName));
+            ObjectInputStream objectStream = new ObjectInputStream(fileStream);
+            Object deserializeObject = objectStream.readObject();
+
+            objectStream.close();
+            fileStream.close();
+
+            return deserializeObject;
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

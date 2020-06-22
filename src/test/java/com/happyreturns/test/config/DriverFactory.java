@@ -78,8 +78,8 @@ public class DriverFactory {
         }
 
         if(operatingSystem.equals("WIN")) {
-            System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\binaries\\windows\\googlechrome.64bit\\chromedriver.exe");
-            System.setProperty("webdriver.gecko.driver",  "src\\test\\resources\\binaries\\windows\\marionette.64bit\\geckodriver.exe");
+            System.setProperty("webdriver.chrome.driver", "C:\\chromeDriver\\chromedriver.exe");
+            //System.setProperty("webdriver.gecko.driver",  "src\\test\\resources\\binaries\\windows\\marionette.64bit\\geckodriver.exe");
         } else if (operatingSystem.equals("MAC OS X")) {
             System.setProperty("webdriver.chrome.driver", "src/test/resources/binaries/osx/googlechrome/64bit/chromedriver");
             System.setProperty("webdriver.gecko.driver", "src/test/resources/binaries/osx/marionette/64bit/geckodriver");
